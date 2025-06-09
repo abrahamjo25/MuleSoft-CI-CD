@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="cd4974a5-124d-4204-a2c8-3bbb2cc342b9" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="mulesoft-ci-cdFlow" doc:id="fd54df37-f3a0-4b1b-b0c6-2b6e53e46ef2" >
+		<http:listener doc:name="Listener" doc:id="585962f6-b737-4b1d-9750-8f4144cc474c" config-ref="HTTP_Listener_config" path="/cicd2"/>
+		<set-variable value="10" doc:name="Set Variable" doc:id="7d2df96a-d321-4833-9a87-b788e23c65b8" variableName="x"/>
+		<set-variable value="20" doc:name="Set Variable" doc:id="2e34579f-6b38-4dc2-b6f9-508621642142" variableName="y"/>
+		<ee:transform doc:name="Transform Message" doc:id="076f6704-50c7-4911-960a-e86bb7809467" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+  ("The sum of " ++ (vars.x default 0) ++ " and " ++ (vars.y default 0)) : (vars.x default 0) + (vars.y default 0)
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
