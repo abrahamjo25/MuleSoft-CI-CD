@@ -13,7 +13,7 @@ stages {
 steps {
 echo 'Deploying mule project due to the latest code commit…'
 echo 'Deploying to the configured environment….'
-bat 'mvn clean deploy -DmuleDeploy -Dmule.app.name=mulesoft-ci-cd -Dusername=abrahamjo24 -Dpassword=aaAA1221'
+bat 'mvn clean deploy -DmuleDeploy -Dmule.app.name=mulesoft-ci-cd -Dusername=abrahamjo24 -Dpassword=aaAA1221 -Dtarget=CloudHub'
 }
 }
 }
